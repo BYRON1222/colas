@@ -1,0 +1,57 @@
+class Node:
+    def __init__(self, value):  # Se corrige __init__
+        self.value = value
+        self.next = None
+
+class Queue:
+    def __init__(self):  # Se corrige __init__
+        self.front_node = None
+        self.rear_node = None
+        self.count = 0
+
+    def enqueue(self, element):
+        new_node = Node(element)
+        if self.rear_node is None:
+            self.front_node = self.rear_node = new_node
+        else:
+            self.rear_node.next = new_node
+            self.rear_node = new_node
+        self.count += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        temp = self.front_node
+        self.front_node = self.front_node.next
+        if self.front_node is None:
+            self.rear_node = None
+        self.count -= 1
+        return temp.value
+
+    def front(self):
+        return None if self.is_empty() else self.front_node.value
+
+    def is_empty(self):
+        return self.front_node is None
+
+    def size(self):
+        return self.count
+
+class TaskManager:
+    def __init__(self):  # Se corrige __init__
+        self.high_priority = Queue()
+        self.normal_priority = Queue()
+
+    def add_task(self, task, priority):
+        if priority == 'alta':
+            self.high_priority.enqueue(task)
+        else:
+            self.normal_priority.enqueue(task)
+
+    def process_task(self):
+        if not self.high_priority.is_empty():
+            return self.high_priority.dequeue()
+        elif not self.normal_priority.is_empty():
+            return self.normal_priority.dequeue()
+        return None
+
