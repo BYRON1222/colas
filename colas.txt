@@ -1,10 +1,11 @@
+# Definimos Queue ANTES de TaskManager
 class Node:
-    def __init__(self, value):  # Se corrige __init__
+    def __init__(self, value):
         self.value = value
         self.next = None
 
 class Queue:
-    def __init__(self):  # Se corrige __init__
+    def __init__(self):
         self.front_node = None
         self.rear_node = None
         self.count = 0
@@ -37,8 +38,9 @@ class Queue:
     def size(self):
         return self.count
 
+# Definimos TaskManager DESPUÉS de Queue
 class TaskManager:
-    def __init__(self):  # Se corrige __init__
+    def __init__(self):
         self.high_priority = Queue()
         self.normal_priority = Queue()
 
@@ -54,4 +56,14 @@ class TaskManager:
         elif not self.normal_priority.is_empty():
             return self.normal_priority.dequeue()
         return None
+
+# Prueba
+tm = TaskManager()
+tm.add_task("Revisar código", "alta")
+tm.add_task("Leer correos", "normal")
+
+print("Procesando tareas:")
+print(tm.process_task())  # Revisar código
+print(tm.process_task())  # Leer correos
+
 
